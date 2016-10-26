@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Match, Miss } from 'react-router';
+
+// Import components
+import StartGameForm from './components/StartGameForm';
+import GamePage from './components/GamePage';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <BrowserRouter>
+        <div>
+          <Match exactly pattern="/" component={StartGameForm} />
+          <Match pattern="/game/:gameId" component={GamePage} />
         </div>
-        <p className="App-intro">
-          Now we're cooking with fire.
-        </p>
-      </div>
+      </BrowserRouter>
     );
   }
 }
