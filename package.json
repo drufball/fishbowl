@@ -13,6 +13,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "patch": "cp deploy_patch/* build",
+    "stage": "yarn run build && yarn run patch && cd build && yarn && yarn run start",
+    "deploy": "gcloud app deploy build/app.yaml",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
