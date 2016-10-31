@@ -5,6 +5,7 @@ import base from '../base';
 // Import components
 import AddWordsPage from './AddWordsPage';
 import SelectTeam from './SelectTeam';
+import GameSummary from './GameSummary';
 
 class GamePage extends React.Component {
   constructor() {
@@ -20,7 +21,8 @@ class GamePage extends React.Component {
       finishedWords: [],
       username: '',
       team: '',
-      currentTeam: '',
+      roundType: 'Free for all',
+      currentTeam: 'red',
       currentWord: '',
       roundInProgress: false,
       redScore: 0,
@@ -43,11 +45,35 @@ class GamePage extends React.Component {
         state: 'finishedWords'
       }
     );
+    this.currentWordBase = base.syncState(
+      `${this.props.params.gameId}/currentWord`,
+      {
+        context: this,
+        state: 'currentWord'
+      }
+    );
+    this.currentTeamBase = base.syncState(
+      `${this.props.params.gameId}/currentTeam`,
+      {
+        context: this,
+        state: 'currentTeam'
+      }
+    );
+    this.roundInProgressBase = base.syncState(
+      `${this.props.params.gameId}/roundInProgress`,
+      {
+        context: this,
+        state: 'roundInProgress'
+      }
+    );
   }
 
   componentWillUnmount() {
     base.removeBinding(this.wordsRemainingBase);
     base.removeBinding(this.finishedWordsBase);
+    base.removeBinding(this.currentWordBase);
+    base.removeBinding(this.currentTeamBase);
+    base.removeBinding(this.roundInProgressBase);
   }
 
   addWords(wordsToAdd) {
@@ -58,7 +84,7 @@ class GamePage extends React.Component {
 
   selectTeam(team) {
     this.setState({ team: team });
-    this.context.router.transitionTo(`${this.props.pathname}/select-username`);
+    this.context.router.transitionTo(`${this.props.pathname}/play`);
   }
 
   render() {
@@ -68,6 +94,8 @@ class GamePage extends React.Component {
                render={() => <AddWordsPage addWords={this.addWords} />} />
         <Match pattern={`${this.props.pathname}/select-team`}
                render={() => <SelectTeam selectTeam={this.selectTeam} />} />
+        <Match pattern={`${this.props.pathname}/play`}
+               render={() => <GameSummary details={this.state} />} />
       </div>
     )
   }
