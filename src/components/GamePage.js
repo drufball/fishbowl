@@ -51,6 +51,7 @@ class GamePage extends React.Component {
   addWords(wordsToAdd) {
     const wordsRemaining = [...this.state.wordsRemaining, ...wordsToAdd];
     this.setState({ wordsRemaining: wordsRemaining });
+    this.context.router.transitionTo(`${this.props.pathname}/select-team`);
   }
 
   render() {
@@ -61,6 +62,10 @@ class GamePage extends React.Component {
       </div>
     )
   }
+}
+
+GamePage.contextTypes = {
+  router: React.PropTypes.object
 }
 
 export default GamePage;

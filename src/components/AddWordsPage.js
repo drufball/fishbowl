@@ -29,7 +29,7 @@ class AddWordsPage extends React.Component {
     return (
       <div className="add-words-page">
         <AddWordsForm proposeWord={this.proposeWord}/>
-        <h1>Your words</h1>
+        <h1>Your words:</h1>
         <ul>
           {this.state.wordsToAdd.map(word => <li key={word}>{word}</li>)}
         </ul>

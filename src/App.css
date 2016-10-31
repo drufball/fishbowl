@@ -40,18 +40,51 @@
 
   padding-top: 20px;
 }
-.start-game-form > input {
+.start-game-form > button {
+  margin-bottom: 50px;
+}
+
+input {
   width: 300px;
   height: 50px;
 
   margin: 20px 0;
-  font-size: 1.8em;
+  font-size: 1.7em;
   text-align: center;
 }
-.start-game-form > button {
+button {
   width: 300px;
   height: 50px;
 
-  margin-bottom: 50px;
-  font-size: 1.8em;
+  font-size: 1.7em;
+}
+
+/* AddWordsPage form */
+.add-words-page {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+.add-words-page > h1 {
+  margin-top: 30px;
+  margin-bottom: 5px;
+
+  font-size: 2.2em;
+}
+.add-words-page > ul {
+  list-style: none;
+  padding-left: 0;
+  text-align: center;
+
+  margin-top: 0;
+  margin-bottom: 25px;
+
+  font-size: 1.5em;
+}
+.add-words-page > ul > li {
+  margin: 7px 0;
+}
+.add-words-form {
+  display: flex;
+  flex-flow: column;
 }
