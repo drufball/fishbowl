@@ -26,7 +26,7 @@ class StartGameForm extends React.Component {
 
   render() {
     return (
-      <form>
+      <form className="start-game-form">
         {/* Create a new game */}
         <input ref={(input) => this.newGameId = input}
                type="text"

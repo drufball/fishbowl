@@ -4,17 +4,13 @@ import './App.css';
 import { BrowserRouter, Match, Miss } from 'react-router';
 
 // Import components
-import StartGameForm from './components/StartGameForm';
-import GamePage from './components/GamePage';
+import MainLayout from './components/MainLayout';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div>
-          <Match exactly pattern="/" component={StartGameForm} />
-          <Match pattern="/game/:gameId" component={GamePage} />
-        </div>
+        <Match pattern="/" component={MainLayout} />
       </BrowserRouter>
     );
   }

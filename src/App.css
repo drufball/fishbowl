@@ -1,24 +1,57 @@
-.App {
+/* MainLayout styles */
+.main-layout {
+  font-family: monospace;
+
+  padding-top: 100px;
+}
+
+/* Header styles */
+.header {
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #0977be;
+}
+.header > .title {
+  color: white;
+  font-size: 2.5em
+}
+
+/* GamePage styles */
+.game-page {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+/* StartGameForm styles */
+.start-game-form {
+  box-sizing: border-box;
+
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+
+  padding-top: 20px;
+}
+.start-game-form > input {
+  width: 300px;
+  height: 50px;
+
+  margin: 20px 0;
+  font-size: 1.8em;
   text-align: center;
 }
+.start-game-form > button {
+  width: 300px;
+  height: 50px;
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  margin-bottom: 50px;
+  font-size: 1.8em;
 }

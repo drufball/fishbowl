@@ -1,5 +1,9 @@
 import React from 'react';
+import { Match } from 'react-router';
 import base from '../base';
+
+// Import components
+import AddWordsForm from './AddWordsForm';
 
 class GamePage extends React.Component {
   constructor() {
@@ -9,37 +13,46 @@ class GamePage extends React.Component {
 
     // Initialize state
     this.state = {
-      words: [],
-      roundPositions: [0, 0, 0]
+      wordsRemaining: [],
+      finishedWords: [],
+      username: '',
+      team: '',
+      currentTeam: '',
+      currentWord: '',
+      roundInProgress: false,
+      redScore: 0,
+      blueScore: 0
     }
   }
 
   componentWillMount() {
-    console.log("Connecting to firebase");
-    this.wordsBase = base.syncState(
-      `${this.props.params.gameId}/words`,
+    this.wordsRemainingBase = base.syncState(
+      `${this.props.params.gameId}/wordsRemaining`,
       {
         context: this,
-        state: 'words'
+        state: 'wordsRemaining'
       }
     );
-    this.roundPositionsBase = base.syncState(
-      `${this.props.params.gameId}/roundPositions`,
+    this.finishedWordsBase = base.syncState(
+      `${this.props.params.gameId}/finishedWords`,
       {
         context: this,
-        state: 'roundPositions'
+        state: 'finishedWords'
       }
     );
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.wordsBase);
-    base.removeBinding(this.roundPositionsBase);
+    base.removeBinding(this.wordsRemainingBase);
+    base.removeBinding(this.finishedWordsBase);
   }
 
   render() {
     return (
-      <div>GamePage</div>
+      <div className="game-page">
+        <Match pattern={`${this.props.pathname}/add-words`}
+               component={AddWordsForm} />
+      </div>
     )
   }
 }
