@@ -11,13 +11,13 @@ class StartGameForm extends React.Component {
   createGame(event) {
     event.preventDefault();
     const gameId = this.formatGameId(this.newGameId.value);
-    this.context.router.transitionTo(`/game/${gameId}`);
+    this.context.router.transitionTo(`/game/${gameId}/add-words`);
   }
 
   joinGame(event) {
     event.preventDefault();
     const gameId = this.formatGameId(this.oldGameId.value);
-    this.context.router.transitionTo(`/game/${gameId}`);
+    this.context.router.transitionTo(`/game/${gameId}/add-words`);
   }
 
   formatGameId(gameId) {
