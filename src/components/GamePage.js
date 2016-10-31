@@ -3,13 +3,14 @@ import { Match } from 'react-router';
 import base from '../base';
 
 // Import components
-import AddWordsForm from './AddWordsForm';
+import AddWordsPage from './AddWordsPage';
 
 class GamePage extends React.Component {
   constructor() {
     super()
 
     // Bind member functions
+    this.addWords = this.addWords.bind(this);
 
     // Initialize state
     this.state = {
@@ -47,11 +48,16 @@ class GamePage extends React.Component {
     base.removeBinding(this.finishedWordsBase);
   }
 
+  addWords(wordsToAdd) {
+    const wordsRemaining = [...this.state.wordsRemaining, ...wordsToAdd];
+    this.setState({ wordsRemaining: wordsRemaining });
+  }
+
   render() {
     return (
       <div className="game-page">
         <Match pattern={`${this.props.pathname}/add-words`}
-               component={AddWordsForm} />
+               render={() => <AddWordsPage addWords={this.addWords} />} />
       </div>
     )
   }
