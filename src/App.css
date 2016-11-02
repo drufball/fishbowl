@@ -28,6 +28,8 @@
   display: flex;
   flex-flow: column;
   align-items: center;
+  width: 80%;
+  margin: auto;
 }
 
 /* StartGameForm styles */
@@ -105,4 +107,29 @@ button {
 .select-team > .or-separator {
   font-size: 1.7em;
   margin: 15px 0;
+}
+
+/* Game summary */
+.scores {
+  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: space-around;
+}
+.red-score > h1, .blue-score > h1 {
+  margin-bottom: 7px;
+}
+.red-score > div, .blue-score > div {
+  font-size: 1.7em;
+}
+.round-type {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding: 10px;
+  border: dashed 1px gray;
+}
+.game-summary > div:last-child {
+  font-size: 1.5em;
+  text-align: center;
 }

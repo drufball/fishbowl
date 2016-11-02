@@ -9,12 +9,17 @@ class GameSummary extends React.Component {
         turnDetail = <div>Start guessing!</div>;
       }
       else {
-        turnDetail = <button>Start turn</button>;
+        turnDetail = <button onClick={this.props.startTurn}>
+                       Start turn →
+                     </button>;
       }
     }
     else {
       if( details.roundInProgress ) {
-        turnDetail = <div>{details.currentWord}</div>;
+        turnDetail = <div>
+                       <p>The other team is guessing:</p>
+                       <p><strong>{details.currentWord}</strong></p>
+                     </div>;
       }
       else {
         turnDetail = <div>It's the other team's turn!</div>;
@@ -22,15 +27,17 @@ class GameSummary extends React.Component {
     }
     return (
       <div className="game-summary">
-        <div className="red-score">
-          <h1>Red Team:</h1>
-          <div>{details.redScore}</div>
+        <div className="scores">
+          <div className="red-score">
+            <h1>Red Team</h1>
+            <div>{details.redScore}</div>
+          </div>
+          <div className="blue-score">
+            <h1>Blue Team</h1>
+            <div>{details.blueScore}</div>
+          </div>
         </div>
-        <div className="blue-score">
-          <h1>Blue Team:</h1>
-          <div>{details.blueScore}</div>
-        </div>
-        <h1 className="roundType">{details.roundType}</h1>
+        <h1 className="round-type">{details.roundType}</h1>
         {turnDetail}
       </div>
     )
@@ -38,7 +45,8 @@ class GameSummary extends React.Component {
 }
 
 GameSummary.propTypes = {
-  details: React.PropTypes.object.isRequired
+  details: React.PropTypes.object.isRequired,
+  startTurn: React.PropTypes.func.isRequired
 }
 
 export default GameSummary;

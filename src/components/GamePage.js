@@ -6,6 +6,7 @@ import base from '../base';
 import AddWordsPage from './AddWordsPage';
 import SelectTeam from './SelectTeam';
 import GameSummary from './GameSummary';
+import TurnPage from './TurnPage';
 
 class GamePage extends React.Component {
   constructor() {
@@ -14,13 +15,14 @@ class GamePage extends React.Component {
     // Bind member functions
     this.addWords = this.addWords.bind(this);
     this.selectTeam = this.selectTeam.bind(this);
+    this.startTurn = this.startTurn.bind(this);
 
     // Initialize state
     this.state = {
       wordsRemaining: [],
       finishedWords: [],
       username: '',
-      team: '',
+      team: 'red',
       roundType: 'Free for all',
       currentTeam: 'red',
       currentWord: '',
@@ -87,6 +89,11 @@ class GamePage extends React.Component {
     this.context.router.transitionTo(`${this.props.pathname}/play`);
   }
 
+  startTurn() {
+    this.setState({ roundInProgress: true });
+    this.context.router.transitionTo(`${this.props.pathname}/turn`);
+  }
+
   render() {
     return (
       <div className="game-page">
@@ -95,7 +102,10 @@ class GamePage extends React.Component {
         <Match pattern={`${this.props.pathname}/select-team`}
                render={() => <SelectTeam selectTeam={this.selectTeam} />} />
         <Match pattern={`${this.props.pathname}/play`}
-               render={() => <GameSummary details={this.state} />} />
+               render={() => <GameSummary details={this.state}
+                                          startTurn={this.startTurn} />} />
+        <Match pattern={`${this.props.pathname}/turn`}
+               render={() => <TurnPage details={this.state} />} />
       </div>
     )
   }
