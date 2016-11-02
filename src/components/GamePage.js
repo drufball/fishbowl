@@ -16,6 +16,10 @@ class GamePage extends React.Component {
     this.addWords = this.addWords.bind(this);
     this.selectTeam = this.selectTeam.bind(this);
     this.startTurn = this.startTurn.bind(this);
+    this.endTurn = this.endTurn.bind(this);
+    this.getNextWord = this.getNextWord.bind(this);
+    this.skipWord = this.skipWord.bind(this);
+    this.correctWord = this.correctWord.bind(this);
 
     // Initialize state
     this.state = {
@@ -68,6 +72,20 @@ class GamePage extends React.Component {
         state: 'roundInProgress'
       }
     );
+    this.redScoreBase = base.syncState(
+      `${this.props.params.gameId}/redScore`,
+      {
+        context: this,
+        state: 'redScore'
+      }
+    );
+    this.blueScoreBase = base.syncState(
+      `${this.props.params.gameId}/blueScore`,
+      {
+        context: this,
+        state: 'blueScore'
+      }
+    );
   }
 
   componentWillUnmount() {
@@ -76,6 +94,8 @@ class GamePage extends React.Component {
     base.removeBinding(this.currentWordBase);
     base.removeBinding(this.currentTeamBase);
     base.removeBinding(this.roundInProgressBase);
+    base.removeBinding(this.redScoreBase);
+    base.removeBinding(this.blueScoreBase);
   }
 
   addWords(wordsToAdd) {
@@ -94,6 +114,60 @@ class GamePage extends React.Component {
     this.context.router.transitionTo(`${this.props.pathname}/turn`);
   }
 
+  endTurn() {
+    this.setState({
+      roundInProgress: false,
+      currentTeam: this.state.currentTeam == 'red' ? 'blue' : 'red'
+    });
+    this.context.router.transitionTo(`${this.props.pathname}/play`);
+  }
+
+  skipWord() {
+    this.getNextWord(true);
+  }
+  correctWord() {
+    const newScore = this.state[`${this.state.currentTeam}Score`] + 1;
+    const finishedWords = [...this.state.finishedWords, this.state.currentWord];
+    if( this.state.currentTeam == 'red' ) {
+      this.setState({
+        redScore: newScore,
+        finishedWords: finishedWords
+      });
+    }
+    else {
+      this.setState({
+        blueScore: newScore,
+        finishedWords: finishedWords
+      });
+    }
+    this.getNextWord();
+  }
+  getNextWord(replace = false) {
+    if(this.state.wordsRemaining.length == 0) {
+      this.setState({
+        wordsRemaining: this.state.finishedWords,
+        finishedWords: []
+      })
+      this.endTurn();
+      return;
+    }
+    const wordIndex = Math.floor( Math.random() * this.state.wordsRemaining.length );
+    const wordsBefore = this.state.wordsRemaining.slice(0, wordIndex);
+    const wordsAfter = this.state.wordsRemaining.slice(wordIndex + 1, this.state.wordsRemaining.length);
+    if(!replace) {
+      this.setState({
+        currentWord: this.state.wordsRemaining[wordIndex],
+        wordsRemaining: [...wordsBefore, ...wordsAfter]
+      });
+    }
+    else {
+      this.setState({
+        currentWord: this.state.wordsRemaining[wordIndex],
+        wordsRemaining: [...wordsBefore, ...wordsAfter, this.state.currentWord]
+      });
+    }
+  }
+
   render() {
     return (
       <div className="game-page">
@@ -105,7 +179,10 @@ class GamePage extends React.Component {
                render={() => <GameSummary details={this.state}
                                           startTurn={this.startTurn} />} />
         <Match pattern={`${this.props.pathname}/turn`}
-               render={() => <TurnPage details={this.state} />} />
+               render={() => <TurnPage details={this.state}
+                                       endTurn={this.endTurn}
+                                       skipWord={this.skipWord}
+                                       correctWord={this.correctWord} />} />
       </div>
     )
   }
