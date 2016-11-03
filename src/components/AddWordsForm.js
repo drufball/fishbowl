@@ -21,7 +21,11 @@ class AddWordsForm extends React.Component {
         <input ref={(input) => this.proposedWord = input}
                type="text"
                placeholder="Add a new word" />
-        <button type="submit" onClick={this.addWord}>+ Add word</button>
+        <button className="add-word"
+                type="submit"
+                onClick={this.addWord}>
+          + Add word
+        </button>
       </form>
     )
   }

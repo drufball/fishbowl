@@ -15,12 +15,15 @@ class Timer extends React.Component {
   componentDidMount() {
     this.timerInterval = setInterval(this.incrementTime, 1000);
   }
+  componentWillUnmount() {
+    clearInterval(this.timerInterval);
+  }
 
   incrementTime() {
     const elapsedTime = this.state.elapsedTime + 1;
     this.setState({elapsedTime: elapsedTime});
 
-    if(this.props.duration == elapsedTime) {
+    if(this.props.duration === elapsedTime) {
       clearInterval(this.timerInterval);
       this.props.endTurn();
     }

@@ -7,10 +7,10 @@ class TurnPage extends React.Component {
   render() {
     return (
       <div className="turn-page">
-        <Timer duration={300} endTurn={this.props.endTurn} />
+        <Timer duration={60} endTurn={this.props.endTurn} />
         <p>{this.props.details.currentWord}</p>
-        <button onClick={this.props.skipWord}>✘ Skip</button>
-        <button onClick={this.props.correctWord}>✓ Correct</button>
+        <button className="skip" onClick={this.props.skipWord}>✘ Skip</button>
+        <button className="correct" onClick={this.props.correctWord}>✓ Correct</button>
       </div>
     )
   }

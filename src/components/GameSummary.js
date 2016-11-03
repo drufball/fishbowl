@@ -4,25 +4,34 @@ class GameSummary extends React.Component {
   render() {
     const details = this.props.details;
     var turnDetail = null;
-    if( details.team == details.currentTeam ) {
-      if( details.roundInProgress ) {
-        turnDetail = <div>Start guessing!</div>;
-      }
-      else {
-        turnDetail = <button onClick={this.props.startTurn}>
-                       Start turn →
-                     </button>;
-      }
+    if( details.roundType === "Game over!" ) {
+      turnDetail = <button className="start-turn"
+                           onClick={this.props.newGame}>
+                     Play again →
+                   </button>;
     }
     else {
-      if( details.roundInProgress ) {
-        turnDetail = <div>
-                       <p>The other team is guessing:</p>
-                       <p><strong>{details.currentWord}</strong></p>
-                     </div>;
+      if( details.team === details.currentTeam ) {
+        if( details.roundInProgress ) {
+          turnDetail = <div>Start guessing!</div>;
+        }
+        else {
+          turnDetail = <button className="start-turn"
+                               onClick={this.props.startTurn}>
+                         Start turn →
+                       </button>;
+        }
       }
       else {
-        turnDetail = <div>It's the other team's turn!</div>;
+        if( details.roundInProgress ) {
+          turnDetail = <div>
+                         <p>The other team is guessing:</p>
+                         <p><strong>{details.currentWord}</strong></p>
+                       </div>;
+        }
+        else {
+          turnDetail = <div>It's the other team's turn!</div>;
+        }
       }
     }
     return (
@@ -46,7 +55,8 @@ class GameSummary extends React.Component {
 
 GameSummary.propTypes = {
   details: React.PropTypes.object.isRequired,
-  startTurn: React.PropTypes.func.isRequired
+  startTurn: React.PropTypes.func.isRequired,
+  newGame: React.PropTypes.func.isRequired
 }
 
 export default GameSummary;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Match, Miss } from 'react-router';
+import { BrowserRouter, Match } from 'react-router';
 
 // Import components
 import MainLayout from './components/MainLayout';

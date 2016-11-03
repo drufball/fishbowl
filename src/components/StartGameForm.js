@@ -1,4 +1,5 @@
 import React from 'react';
+import base from '../base';
 
 class StartGameForm extends React.Component {
   constructor() {
@@ -11,7 +12,23 @@ class StartGameForm extends React.Component {
   createGame(event) {
     event.preventDefault();
     const gameId = this.formatGameId(this.newGameId.value);
-    this.context.router.transitionTo(`/game/${gameId}/add-words`);
+    base.post(gameId, {
+      data: {
+        wordsRemaining: [],
+        finishedWords: [],
+        roundType: 'Free for all',
+        currentTeam: 'red',
+        currentWord: '',
+        roundInProgress: false,
+        redScore: 0,
+        blueScore: 0
+      }
+    }).then(() => {
+      this.context.router.transitionTo(`/game/${gameId}/add-words`);
+    }).catch(err => {
+      console.log(err);
+    });
+
   }
 
   joinGame(event) {

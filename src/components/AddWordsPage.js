@@ -30,10 +30,11 @@ class AddWordsPage extends React.Component {
       <div className="add-words-page">
         <AddWordsForm proposeWord={this.proposeWord}/>
         <h1>Your words:</h1>
-        <ul>
+        <ul className="words-to-add">
           {this.state.wordsToAdd.map(word => <li key={word}>{word}</li>)}
         </ul>
-        <button onClick={this.addWords}>Done</button>
+        <button className="submit-words"
+                onClick={this.addWords}>✓ Done</button>
       </div>
     )
   }
